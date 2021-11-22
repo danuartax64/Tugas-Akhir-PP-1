@@ -17,6 +17,8 @@ typedef struct Point Point;
 int main(int argc, char ** argv)
 {
   int rank, size, i, j;
+  clock_t startTime, endTime
+  double elapsedTime
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -27,7 +29,9 @@ int main(int argc, char ** argv)
   Point * arr;
   int start = workToDo*rank;
   int end = start+workToDo;
+  srand(time(0));
   
+  startTime = clock();
   arr = (Point *) malloc(workToDo*sizeof(Point));
   for( i = start, j= 0; i < end; i++,j++)
   {
@@ -44,6 +48,10 @@ int main(int argc, char ** argv)
   }
   
   MPI_Reduce(&localSum, &totalSum, 3, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
+  endTime = clock()
+  elapsedTime = ((double)endTime - startTime) / CLOCKS_PER_SEC;
+  printf("Waktu yang dibutuhkan: %d : %f detik",rank,elapsedTime);
+  
 
   free((void *) arr);
   if(rank == 0)
