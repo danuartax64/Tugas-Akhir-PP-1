@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 1000000000
+#define N 100
 
 struct Point
 {
@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
   MPI_Reduce(&localSum, &totalSum, 3, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
   endTime = clock();
   elapsedTime = ((double)endTime - startTime) / CLOCKS_PER_SEC;
-  printf("Waktu yang dibutuhkan: %d : %f detik", rank, elapsedTime);
+  printf("Waktu yang dibutuhkan: %d : %f detik\n", rank, elapsedTime);
   
 
   free((void *) arr);
