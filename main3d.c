@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define N 1000000000
 
@@ -17,8 +18,8 @@ typedef struct Point Point;
 int main(int argc, char ** argv)
 {
   int rank, size, i, j;
-  clock_t startTime, endTime
-  double elapsedTime
+  clock_t startTime, endTime;
+  double elapsedTime;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -48,9 +49,9 @@ int main(int argc, char ** argv)
   }
   
   MPI_Reduce(&localSum, &totalSum, 3, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
-  endTime = clock()
+  endTime = clock();
   elapsedTime = ((double)endTime - startTime) / CLOCKS_PER_SEC;
-  printf("Waktu yang dibutuhkan: %d : %f detik",rank,elapsedTime);
+  printf("Waktu yang dibutuhkan: %d : %f detik", rank, elapsedTime);
   
 
   free((void *) arr);
