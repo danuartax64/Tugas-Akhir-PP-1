@@ -13,24 +13,23 @@ struct Point
   int z;
 };
 
-typedef struct Point Point;
+typedef struct Point Point;                 #memberikan nama lain/alias kepada Point yang sudah dibuat sebelumnya
 
-int main(int argc, char ** argv)
+int main(int argc, char ** argv)            #deklarasi bahwa bagian ini sampai MPI_Finalize() menggunakan MPI
 {
   int rank, size, i, j;
   clock_t startTime, endTime;
   double elapsedTime;
   MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);     #jumlah proses yang digunakan dari executor/server
 
-  long localSum[3] = {0L,0L,0L};
-  long totalSum[3] = {0L,0L,0L};
+  long localSum[3] = {0L,0L,0L};            #long integer value dengan semua nilai dijadikan 0 pada awal
+  long totalSum[3] = {0L,0L,0L};            #long integer value dengan semua nilai dijadikan 0 pada awal
   int workToDo = N/size;
   Point * arr;
   int start = workToDo*rank;
   int end = start+workToDo;
-  srand(time(0));
   
   startTime = clock();
   arr = (Point *) malloc(workToDo*sizeof(Point));
@@ -50,7 +49,7 @@ int main(int argc, char ** argv)
   
   MPI_Reduce(&localSum, &totalSum, 3, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
   endTime = clock();
-  elapsedTime = ((double)endTime - startTime) / CLOCKS_PER_SEC;
+  elapsedTime = ((double)endTime - startTime) / CLOCKS_PER_SEC;                       #karena ingin menjadi satuan detik maka dibagi CLOCKS_PER_SEC
   printf("Waktu yang dibutuhkan: %d : %f detik\n", rank, elapsedTime);
   
 
